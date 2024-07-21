@@ -1,0 +1,36 @@
+{% extends "layouts/_clean.html" %}
+{% from "macros/_form.html" import form_field, form_field_check, form_submit %}
+{% from "security/_macros.html" import render_field_errors, render_form_errors %}
+
+{% block content %}
+  <div class="container-fluid p-0">
+    <div class="row g-0 justify-content-end">
+      <div class="col-md-6 bg-dark">
+        <div class="min-vh-100 shadow d-flex align-items-center">
+            <div class="row g-0 flex-grow-1">
+              <div class="col-md-7">
+                <div class="ps-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <h3 class="card-title mb-4">{{ _fsdomain('Login') }}</h3>
+                      <form action="{{ url_for_security('login') }}" method="POST" name="login_user_form">
+                        {{ login_user_form.hidden_tag() }}
+                        {{form_field(login_user_form.email)}}
+                        {{form_field(login_user_form.password)}}
+                        {{form_field_check(login_user_form.remember) }}
+                        {{render_field_errors(login_user_form.csrf_token) }}
+                        {% include "security/_messages.html" %}
+                        {{ render_form_errors(login_user_form) }}
+                        {{form_submit(login_user_form.submit) }}
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% include "security/_menu.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

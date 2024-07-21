@@ -1,0 +1,9 @@
+{% for debtor in debtors %}
+<button 
+    type="button" 
+    class="list-group-item list-group-item-action"
+    value="{{debtor.id}}"
+>
+    {{debtor.name}}
+</button>
+{% endfor %}

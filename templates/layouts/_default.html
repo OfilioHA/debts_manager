@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% from "macros/_auth.html" import render_menu %}
+
+
+{% block layout_content %}
+    <div class="d-flex">
+        {{ render_menu(current_user, url_prefix) }}
+        <div id="page-content" class="px-5 pt-4 w-100">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

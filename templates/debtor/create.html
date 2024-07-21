@@ -1,0 +1,11 @@
+{% extends "layouts/_default.html" %}
+{% from "macros/_form.html" import form_field, form_submit %}
+
+
+{% block content %}
+    <form action="{{ url_for('debtor.create') }}" method="POST" name="debtor_form">
+        {{ form.hidden_tag() }}
+        {{ form_field(form.name) }}
+        {{ form_submit(form.submit) }}
+    </form>
+{% endblock %}

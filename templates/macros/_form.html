@@ -1,0 +1,38 @@
+{% macro single_field (field, class="form-control", validate=True) %}
+{{ field(class=class + (' is-invalid' if field.errors and validate else '')) }}
+{% endmacro %}
+
+{% macro form_group () -%}
+<div class="form-group mb-3">
+    {{caller()}}
+</div>
+{% endmacro %}
+
+{% macro render_error (field) %}
+    {% if field.errors %}
+        <div class="invalid-feedback">
+            {% for error in field.errors %}
+                {{ error }}<br>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro form_field (field, class="form-control") %}
+    {% call form_group() %}
+        {{ field.label(class="form-label") }}
+        {{ single_field(field, class) }}
+        {{ render_error(field) }}
+    {% endcall %}
+{% endmacro %}
+
+{% macro form_field_check (field) %}
+<div class="form-check mb-3">
+    {{ field.label(class="form-check-label") }}
+    {{ field(class="form-check-input") }}
+</div>
+{% endmacro %}
+
+{% macro form_submit (field) %}
+{{ field(class="btn btn-primary") }}
+{% endmacro %}

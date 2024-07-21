@@ -1,0 +1,17 @@
+{% from "macros/_form.html" import form_field, form_submit %}
+
+<form action="{{ url_for('debtor.modal_create') }}" method="POST" name="debtor_modal_form" novalidate>
+    <div class="modal-body">
+        {{ form_search.hidden_tag() }}
+        {{ form_field(form_search.name) }}
+        {%if message %}
+        <div class="alert alert-success" role="alert">
+            {{message}}
+        </div>
+        {% endif %}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        {{ form_submit(form_search.submit) }}    
+    </div>
+</form>

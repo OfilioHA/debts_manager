@@ -1,0 +1,68 @@
+{% extends "layouts/_default.html" %}
+{% from "macros/_form.html" import form_field, form_submit, single_field %}
+{% from "macros/_searcher.html" import form_searcher %}
+
+{% block content %}
+
+    {% call form_searcher(
+        form_search,
+        form.debtor, 
+        "Buscador Deudor", 
+        'debtor.search',
+        'debtor',
+    ) %}
+        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <i class="bi bi-plus me-2"></i>
+            Agregar
+        </button>    
+    {% endcall %}
+    
+    <!-- Modal -->
+    <div 
+        id="exampleModal" 
+        class="modal fade" 
+        tabindex="-1" 
+        aria-labelledby="exampleModalLabel" 
+        aria-hidden="true"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="container-debtor-form" 
+                    data-ssr 
+                    data-event="submit" 
+                    data-listener='form[name="debtor_modal_form"]'
+                >
+                    {% include 'debtor/_modal-create.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+  
+
+    <form action="{{ url_for('debts.create') }}" method="POST" name="debts_form" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_field(form.concept) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_field(form.currency) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_field(form.value) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_field(form.interest) }}
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            {{ form_submit(form.submit) }}        
+        </div>
+    </form>
+{% endblock %}

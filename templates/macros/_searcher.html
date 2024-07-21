@@ -1,0 +1,37 @@
+{% from "macros/_form.html" import single_field, render_error %}
+
+{% macro form_searcher(form, field, title, action, name, target) -%}
+{% set name = name + "_search_form" %}
+{% set is_invalid = 'is-invalid' if field.errors else '' %}
+{% set searcher_class = 'searcher form-control h-100 ' + is_invalid %}
+{% set searcher_target = target if target else '#' + field.id %}
+<form action="{{ url_for(action) }}" method="POST" name="{{name}}">
+    {{ form.hidden_tag() }}
+    <label for="name" class="form-label">
+        {{title}}
+    </label>
+    <div class="form-group mb-3">
+        <div class="input-group {{is_invalid}}">
+            <div class="flex-grow-1 position-relative">
+                {{ single_field(form.name, searcher_class) }}
+                <ul 
+                    class="z-3 position-absolute list-group top-100 w-100" 
+                    data-listener='form[name="{{name}}"]'
+                    data-target='{{searcher_target}}'
+                    data-event="submit" 
+                    data-searcher
+                    data-ssr 
+                >
+                    <!--- List Items Go Here --->
+                </ul>
+            </div>
+            <button class="btn btn-primary" id="submit" name="submit" type="submit">
+                <i class="bi bi-search me-2"></i>
+                Buscar
+            </button>
+            {{caller()}}
+        </div>
+        {{ render_error(field) }}
+    </div>
+</form>
+{%- endmacro %}
