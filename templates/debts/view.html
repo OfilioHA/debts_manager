@@ -1,0 +1,58 @@
+{% extends "layouts/_default.html" %} {% block content %}
+<h3 class="mb-0">Vista de deuda</h3>
+<hr class="my-3" />
+<div class="container-fluid px-0">
+  <div class="row">
+    <div class="col-md-12">
+      <h4>Deudor</h4>
+      <h4 class="fw-bold mb-3">{{debt.debtor.name}}</h4>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col-md-6">
+      <h5>Concepto {{debt.concept}}</h5>
+    </div>
+    <div class="col-md-6">
+      <h5>Cantidad {{debt.value}}</h5>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col-md-6">
+      <h5>Interes {{debt.interest}}</h5>
+    </div>
+  </div>
+</div>
+<section id="payments-table" class="mt-4">
+  <h5 class="mb-3">Pagos Realizados</h5>
+  <div class="table-responsive">
+    <table class="table table-hover table-sm">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col" style="width: 60px">#</th>
+          <th scope="col" style="width: 350px">Concepto</th>
+          <th scope="col" style="width: 350px">Cantidad</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if not debt.payments %}
+            <tr class="text-center text-muted">
+                <td colspan="100">
+                    No se han realizado pagos a esta deuda
+                </td>
+            </tr>
+        {% endif %}
+        {% for payment in debt.payments %}
+          <tr>
+            <th scope="row">{{loop.index}}</th>
+            <td>{{payment.value}}</td>
+            <td></td>
+            <td></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+{% endblock %}

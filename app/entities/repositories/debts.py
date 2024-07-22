@@ -15,6 +15,13 @@ class DebtRepository:
         db.session.commit()
         return new_debt
 
+    def edit(self, debt: Debt, values):
+        debt.concept = values['concept']
+        debt.interest = values['interest']
+        debt.value = values['value']
+        db.session.commit()
+        return debt
+
     def get_current_debt(self, debtor_id):
         query = db.session \
             .query(functions.sum(Debt.value).label('current_debt')) \

@@ -1,0 +1,39 @@
+{% extends "layouts/_default.html" %}
+
+{% block content %}
+    <h3 class="mb-0">{{debtor.name}}</h3>
+    <hr class="my-3" />
+    <h4 class="mb-3">Deudas</h4>
+    <div class="table-responsive">
+        <table class="table table-hover table-sm">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col" style="width: 60px;">#</th>
+                <th scope="col" style="width: 350px;">Concepto</th>
+                <th scope="col" style="width: 350px;">Cantidad</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                {% for debt in debtor.debts %}
+                <tr>
+                    <th scope="row">{{loop.index}}</th>
+                    <td>{{debt.concept}}</td>
+                    <td>{{debt.value}}</td>
+                    <td>
+                        <span class="badge {{"bg-danger" if not debt.remaining else "bg-success" }}">
+                          {{debtor.debt if debtor.debt else "LIMPIO" }}
+                        </span>
+                    </td>
+                    <td>
+                      <a class="link" href="{{url_for("debts.view", debt_id=debt.id)}}">
+                        Ver
+                      </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

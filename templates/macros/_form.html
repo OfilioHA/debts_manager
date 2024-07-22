@@ -33,6 +33,6 @@
 </div>
 {% endmacro %}
 
-{% macro form_submit (field) %}
-{{ field(class="btn btn-primary") }}
+{% macro form_submit (field, class='') %}
+{{ field(class="btn btn-primary " + class) }}
 {% endmacro %}

@@ -6,11 +6,20 @@ from app.entities.models import Debtor
 
 debtor_bp = Blueprint('debtor', __name__, url_prefix="/debtors")
 
+
 @debtor_bp.route('/', methods=["POST", "GET"])
 @login_required
 def index():
-    debtors = Debtor.query.all();
+    debtors = Debtor.query.all()
     return render_template('debtor/index.html', debtors=debtors)
+
+
+@debtor_bp.route('/view/<int:debtor_id>', methods=["POST", "GET"])
+@login_required
+def view(debtor_id: int):
+    debtor = Debtor.query.get_or_404(debtor_id)
+    return render_template('debtor/view.html', debtor=debtor)
+
 
 @debtor_bp.route('/create', methods=["POST", "GET"])
 @login_required
@@ -36,7 +45,7 @@ def modal_create():
     db.session.add(new_debtor)
     db.session.commit()
     return render_template(
-        'debtor/_modal-create.html', 
+        'debtor/_modal-create.html',
         form_search=form,
         message='¡Nuevo deudor añadido!'
     )

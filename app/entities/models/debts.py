@@ -12,6 +12,7 @@ class Currency(db.Model):
 class Debtor(db.Model, TimeStampMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
+    debts = db.relationship('Debt', backref='debtor', lazy=True)
 
 
 class Debt(db.Model, TimeStampMixin):
@@ -20,6 +21,7 @@ class Debt(db.Model, TimeStampMixin):
     concept = db.Column(db.String)
     interest = db.Column(db.Integer)
     value = db.Column(db.Float)
+    payments = db.relationship('Payment', backref='debt', lazy=True)
 
 
 class Payment(db.Model, TimeStampMixin):

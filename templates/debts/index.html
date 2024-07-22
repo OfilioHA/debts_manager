@@ -15,51 +15,25 @@
             <table class="table table-hover table-sm">
                 <thead class="table-dark">
                   <tr>
-                    <th scope="col" style="width: 25px;"></th>
                     <th scope="col" style="width: 60px;">#</th>
-                    <th scope="col" style="width: 350px;">Nombre</th>
-                    <th scope="col">Estado</th>
+                    <th scope="col" style="width: 350px;">Deudor</th>
+                    <th scope="col">Concepto</th>
                     <th scope="col">Acciones</th>
                   </tr>
                 </thead>
                 <tbody class="table-group-divider">
-                  {% for debtor in debtors %}
-                    {% set row_detail = "detail-debtor-" + loop.index|string %}                  
+                  {% for debt in debts %}
                     <tr>
-                      <td>
-                        <a
-                          data-bs-toggle="collapse" 
-                          href="#{{row_detail}}"
-                          aria-expanded="false"
-                          aria-controls="{{row_detail}}"
-                        >
-                          <i class="bi bi-chevron-down"></i>
-                        </a>
-                      </td>
                       <th scope="row">{{loop.index}}</th>
-                      <td>{{debtor.name}}</td>
+                      <td>{{debt.debtor.name}}</td>
+                      <td>{{debt.concept}}</td>
                       <td>
-                        <span class="badge {{"bg-danger" if debtor.debt else "bg-success" }}">
-                          {{debtor.debt if debtor.debt else "LIMPIO" }}
-                        </span>
-                      </td>
-                      <td>
-                        <a href="{{url_for("debts.edit", debt_id=debtor.id)}}">
+                        <a href="{{url_for("debts.view", debt_id=debt.id)}}">
                           Ver
                         </a>
-                      </td>
-                    </tr>
-                    <tr class="collapse" id="{{row_detail}}">
-                      <td colspan="100">
-                        <table class="table mb-0">
-                          <thead class="table-dark">
-                            <tr>
-                              <td>kkck</td>
-                              <td>kkck</td>
-                              <td>kkck</td>
-                            </tr>
-                          </thead>
-                        </table>
+                        <a class="ms-2" href="{{url_for("debts.edit", debt_id=debt.id)}}">
+                          Editar
+                        </a>
                       </td>
                     </tr>
                   {% endfor %}
